@@ -27,7 +27,7 @@ export class PredictionStoreService {
     });
   }
 
-  updateGroupScore(matchId: string, score: MatchScore): void {
+  updateGroupScore(matchId: string, score: MatchScore | null): void {
     this._state.update(state => ({
       ...state,
       groupMatches: state.groupMatches.map(m =>

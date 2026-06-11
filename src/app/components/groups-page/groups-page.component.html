@@ -1,0 +1,27 @@
+<div class="groups-page">
+  <h1 class="page-title">FIFA World Cup 2026 — Group Stage</h1>
+
+  <div class="groups-grid">
+    @for (groupId of groupIds; track groupId) {
+      <section class="group">
+        <h2 class="group-heading">Group {{ groupId }}</h2>
+
+        <app-group-table
+          [standings]="groupStandings().get(groupId)!"
+          [teamMap]="teamMap"
+        />
+
+        <div class="matches">
+          @for (match of groupedMatches().get(groupId); track match.id) {
+            <app-match-card
+              [match]="match"
+              [homeTeam]="teamMap.get(match.homeTeamId)!"
+              [awayTeam]="teamMap.get(match.awayTeamId)!"
+              (scoreChange)="onScoreChange($event)"
+            />
+          }
+        </div>
+      </section>
+    }
+  </div>
+</div>

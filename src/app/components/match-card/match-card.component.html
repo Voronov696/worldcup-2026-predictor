@@ -1,0 +1,31 @@
+<div class="match-card" [class.played]="match.score !== null">
+  <span class="team">
+    <img [src]="'https://flagcdn.com/w40/' + homeTeam.code + '.png'" [alt]="homeTeam.name" class="flag" />
+    {{ homeTeam.name }}
+  </span>
+  <div class="score">
+    <input
+      type="number"
+      min="0"
+      step="1"
+      inputmode="numeric"
+      [(ngModel)]="homeValue"
+      (blur)="onBlur()"
+      [attr.aria-label]="homeTeam.name + ' score'"
+    />
+    <span class="separator">–</span>
+    <input
+      type="number"
+      min="0"
+      step="1"
+      inputmode="numeric"
+      [(ngModel)]="awayValue"
+      (blur)="onBlur()"
+      [attr.aria-label]="awayTeam.name + ' score'"
+    />
+  </div>
+  <span class="team">
+    <img [src]="'https://flagcdn.com/w40/' + awayTeam.code + '.png'" [alt]="awayTeam.name" class="flag" />
+    {{ awayTeam.name }}
+  </span>
+</div>

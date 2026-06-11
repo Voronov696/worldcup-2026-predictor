@@ -1,0 +1,35 @@
+<table>
+  <thead>
+    <tr>
+      <th class="pos">#</th>
+      <th class="team-name">Team</th>
+      <th title="Played">P</th>
+      <th title="Won">W</th>
+      <th title="Drawn">D</th>
+      <th title="Lost">L</th>
+      <th title="Goals For">GF</th>
+      <th title="Goals Against">GA</th>
+      <th title="Goal Difference">GD</th>
+      <th title="Points">Pts</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of standings; track row.teamId; let pos = $index) {
+      <tr [class.qualified]="pos < 2" [class.third]="pos === 2">
+        <td class="pos">{{ pos + 1 }}</td>
+        <td class="team-name">
+          <img [src]="'https://flagcdn.com/w40/' + (teamMap.get(row.teamId)?.code ?? '') + '.png'" [alt]="teamName(row.teamId)" class="flag" />
+          {{ teamName(row.teamId) }}
+        </td>
+        <td>{{ row.played }}</td>
+        <td>{{ row.won }}</td>
+        <td>{{ row.drawn }}</td>
+        <td>{{ row.lost }}</td>
+        <td>{{ row.goalsFor }}</td>
+        <td>{{ row.goalsAgainst }}</td>
+        <td>{{ row.goalDifference > 0 ? '+' + row.goalDifference : row.goalDifference }}</td>
+        <td class="pts">{{ row.points }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

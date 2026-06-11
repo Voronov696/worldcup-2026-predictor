@@ -1,0 +1,61 @@
+.match-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+
+  &.played {
+    background: #f0f7ff;
+    border-color: #b6d4fe;
+  }
+}
+
+.team {
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #212529;
+
+  &:last-child {
+    text-align: right;
+  }
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+
+  input {
+    width: 2.5rem;
+    padding: 0.25rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background: #fff;
+    color: #212529;
+
+    &:focus {
+      outline: none;
+      border-color: #86b7fe;
+      box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.15);
+    }
+
+    /* Hide browser spin buttons */
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      appearance: none;
+    }
+  }
+}
+
+.separator {
+  font-size: 0.875rem;
+  color: #6c757d;
+  user-select: none;
+}
