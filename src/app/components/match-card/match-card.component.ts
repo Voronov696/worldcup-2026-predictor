@@ -28,31 +28,34 @@ export class MatchCardComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['match']) {
-      const m: GroupMatch = changes['match'].currentValue;
-      this.homeValue = m.score?.home?.toString() ?? '';
-      this.awayValue = m.score?.away?.toString() ?? '';
+      const prev: GroupMatch | undefined = changes['match'].previousValue;
+      const curr: GroupMatch = changes['match'].currentValue;
+      if (prev?.id !== curr.id) {
+        this.homeValue = curr.score?.home?.toString() ?? '';
+        this.awayValue = curr.score?.away?.toString() ?? '';
+      }
     }
   }
 
   onBlur(): void {
-    const homeRaw = this.homeValue.trim();
-    const awayRaw = this.awayValue.trim();
-
-    if (homeRaw === '' || awayRaw === '') {
+    const coerce = (val: unknown): number | null => {
+      if (val === '' || val === null || val === undefined) return null;
+      const n = Number(val);
+      if (!Number.isFinite(n) || !Number.isInteger(n) || n < 0) return null;
+      return n;
+    };
+    const home = coerce(this.homeValue);
+    const away = coerce(this.awayValue);
+    if (home === null && away === null) {
+      this.homeValue = '';
+      this.awayValue = '';
       this.scoreChange.emit({ matchId: this.match.id, score: null });
       return;
     }
-
-    const home = parseInt(homeRaw, 10);
-    const away = parseInt(awayRaw, 10);
-
-    if (isNaN(home) || home < 0 || isNaN(away) || away < 0) {
-      if (isNaN(home) || home < 0) this.homeValue = '';
-      if (isNaN(away) || away < 0) this.awayValue = '';
-      this.scoreChange.emit({ matchId: this.match.id, score: null });
+    if (home !== null && away !== null) {
+      this.scoreChange.emit({ matchId: this.match.id, score: { home, away } });
       return;
     }
-
-    this.scoreChange.emit({ matchId: this.match.id, score: { home, away } });
+    // partial entry — one field filled, one empty; do not emit, do not clear
   }
 }
